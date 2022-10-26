@@ -15,20 +15,20 @@ func main() {
 		RetryIntervalSecond:      1,
 	}
 
-	addDataWorkerFn := func(data map[string]any) (map[string]any, error) {
+	addParamActionFn := func(data map[string]any) (map[string]any, error) {
 		data["newKey"] = 22
 		return data, nil
 	}
-	printWorkerFn := func(data map[string]any) (map[string]any, error) {
+	logActionFn := func(data map[string]any) (map[string]any, error) {
 		fmt.Println(data)
 		return data, nil
 	}
 	tp := worker.NewWorkerConfigurer(*config)
 
-	addWorker := worker.NewDefaultWorker(addDataWorkerFn).WithRetryCount(1).WithTimeoutSeconds(20)
-	printWorker := worker.NewDefaultWorker(printWorkerFn)
+	addParamWorker := worker.NewDefaultWorker(addParamActionFn).WithRetryCount(1).WithTimeoutSeconds(20)
+	logWorker := worker.NewDefaultWorker(logActionFn)
 
-	tp.RegisterWorker(addWorker, "add-data-worker", 1*time.Second, 2, 1)
-	tp.RegisterWorker(printWorker, "print-worker", 1*time.Second, 2, 1)
+	tp.RegisterWorker(addParamWorker, "add-params-action", 1*time.Second, 2, 1)
+	tp.RegisterWorker(logWorker, "print-worker", 1*time.Second, 2, 1)
 	tp.Start()
 }
