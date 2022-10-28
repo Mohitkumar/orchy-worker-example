@@ -10,7 +10,6 @@ import (
 func main() {
 	config := &worker.WorkerConfiguration{
 		ServerUrl:                "localhost:8099",
-		PollInterval:             1,
 		MaxRetryBeforeResultPush: 1,
 		RetryIntervalSecond:      1,
 	}
