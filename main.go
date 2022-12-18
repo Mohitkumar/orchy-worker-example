@@ -9,7 +9,7 @@ import (
 
 func main() {
 	config := &worker.WorkerConfiguration{
-		ServerUrl:                []string{"localhost:8099", "localhost:8098"},
+		ServerUrl:                "localhost:8099",
 		MaxRetryBeforeResultPush: 1,
 		RetryIntervalSecond:      1,
 	}
