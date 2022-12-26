@@ -54,10 +54,10 @@ github.com/grpc-ecosystem/grpc-gateway v1.16.0/go.mod h1:BDjrQk3hbvj6Nolgz8mAMFb
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
-github.com/mohitkumar/orchy/api v0.0.4-beta h1:TQRsXE83ky1JsjiUVI8oWrSWCkkw9+P21coAmuAL69Y=
-github.com/mohitkumar/orchy/api v0.0.4-beta/go.mod h1:5QEfNHDo0RotsQcmjtnsIN4jgBiruWgoJYU3vm4n3To=
-github.com/mohitkumar/orchy/worker v0.0.4-beta h1:r1R7Ydas1pJsNzIJj52b9mv/h4VTb33596Fp0PddOoI=
-github.com/mohitkumar/orchy/worker v0.0.4-beta/go.mod h1:FRNk0zfSmguQ2tqFQK3Ygc/lzbSzmc/gWIKZNqtshRo=
+github.com/mohitkumar/orchy/api v0.0.1 h1:8C0sSh/SjBofHBybLXIcC5vLVGnYE4iX1TtogEjoU2w=
+github.com/mohitkumar/orchy/api v0.0.1/go.mod h1:5QEfNHDo0RotsQcmjtnsIN4jgBiruWgoJYU3vm4n3To=
+github.com/mohitkumar/orchy/worker v0.0.1 h1:t/2EBMhdynDMEQPZCloRywt43btbh//uP+kLrPn6QF4=
+github.com/mohitkumar/orchy/worker v0.0.1/go.mod h1:N3tVacn7/QoPAwB1lGce9WEdiYW67QbiZROxZD4Xn2s=
 github.com/pkg/errors v0.8.1 h1:iURUrRGxPUNPdy5/HRSm+Yj6okJ6UtLINN0Q9M4+h3I=
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
