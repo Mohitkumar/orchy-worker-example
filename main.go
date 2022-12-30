@@ -22,13 +22,18 @@ func main() {
 		fmt.Println(data)
 		return data, nil
 	}
+	enhanceDataFn := func(data map[string]any) (map[string]any, error) {
+		data["key"] = fmt.Sprintf("prefix_%v", data["key"])
+		return data, nil
+	}
 	tp := worker.NewWorkerConfigurer(*config)
 
 	addParamWorker := worker.NewDefaultWorker(addParamActionFn).WithRetryCount(1).WithTimeoutSeconds(20)
-	logWorker := worker.NewDefaultWorker(logActionFn)
+	logWorker := worker.NewDefaultWorker(logActionFn).WithRetryCount(1).WithTimeoutSeconds(20)
+	enhanceDataWorker := worker.NewDefaultWorker(enhanceDataFn).WithRetryCount(1).WithTimeoutSeconds(20)
 
-	err := tp.RegisterWorker(addParamWorker, "add-data-worker", 1*time.Second, 2, 1)
-	fmt.Print(err)
-	tp.RegisterWorker(logWorker, "print-worker", 1*time.Second, 2, 1)
+	tp.RegisterWorker(addParamWorker, "add-data-worker", 1*time.Second, 2, 4)
+	tp.RegisterWorker(logWorker, "print-worker", 1*time.Second, 2, 4)
+	tp.RegisterWorker(enhanceDataWorker, "enhanceData", 1*time.Second, 2, 4)
 	tp.Start()
 }
