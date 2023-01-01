@@ -28,12 +28,12 @@ func main() {
 	}
 	tp := worker.NewWorkerConfigurer(*config)
 
-	addParamWorker := worker.NewDefaultWorker(addParamActionFn).WithRetryCount(1).WithTimeoutSeconds(20)
-	logWorker := worker.NewDefaultWorker(logActionFn).WithRetryCount(1).WithTimeoutSeconds(20)
-	enhanceDataWorker := worker.NewDefaultWorker(enhanceDataFn).WithRetryCount(1).WithTimeoutSeconds(20)
+	addParamWorker := worker.NewDefaultWorker(addParamActionFn).WithRetryCount(2).WithTimeoutSeconds(20)
+	logWorker := worker.NewDefaultWorker(logActionFn).WithRetryCount(2).WithTimeoutSeconds(20)
+	enhanceDataWorker := worker.NewDefaultWorker(enhanceDataFn).WithRetryCount(2).WithTimeoutSeconds(20)
 
-	tp.RegisterWorker(addParamWorker, "add-data-worker", 1*time.Second, 2, 4)
-	tp.RegisterWorker(logWorker, "print-worker", 1*time.Second, 2, 4)
-	tp.RegisterWorker(enhanceDataWorker, "enhanceData", 1*time.Second, 2, 4)
+	tp.RegisterWorker(addParamWorker, "add-data-worker", 1*time.Millisecond, 100, 4)
+	tp.RegisterWorker(logWorker, "print-worker", 1*time.Millisecond, 100, 4)
+	tp.RegisterWorker(enhanceDataWorker, "enhanceData", 1*time.Millisecond, 100, 4)
 	tp.Start()
 }
