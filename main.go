@@ -2,16 +2,19 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"os/signal"
+	"sync"
+	"syscall"
 	"time"
 
 	"github.com/mohitkumar/orchy/worker"
 )
 
 func main() {
+	var wg sync.WaitGroup
 	config := &worker.WorkerConfiguration{
-		ServerUrl:                "localhost:8099",
-		MaxRetryBeforeResultPush: 1,
-		RetryIntervalSecond:      1,
+		ServerUrl: "localhost:8099",
 	}
 
 	addParamActionFn := func(data map[string]any) (map[string]any, error) {
@@ -26,14 +29,20 @@ func main() {
 		data["key"] = fmt.Sprintf("prefix_%v", data["key"])
 		return data, nil
 	}
-	tp := worker.NewWorkerConfigurer(*config)
+	tp := worker.NewWorkerConfigurer(*config, &wg)
 
 	addParamWorker := worker.NewDefaultWorker(addParamActionFn).WithRetryCount(2).WithTimeoutSeconds(20)
 	logWorker := worker.NewDefaultWorker(logActionFn).WithRetryCount(2).WithTimeoutSeconds(20)
 	enhanceDataWorker := worker.NewDefaultWorker(enhanceDataFn).WithRetryCount(2).WithTimeoutSeconds(20)
 
-	tp.RegisterWorker(addParamWorker, "add-data-worker", 1*time.Millisecond, 100, 4)
-	tp.RegisterWorker(logWorker, "print-worker", 1*time.Millisecond, 100, 4)
-	tp.RegisterWorker(enhanceDataWorker, "enhanceData", 1*time.Millisecond, 100, 4)
+	tp.RegisterWorker(addParamWorker, "add-data-worker", 100*time.Millisecond, 100, 1)
+	tp.RegisterWorker(logWorker, "print-worker", 100*time.Millisecond, 100, 1)
+	tp.RegisterWorker(enhanceDataWorker, "enhanceData", 100*time.Millisecond, 100, 1)
 	tp.Start()
+	sigc := make(chan os.Signal, 1)
+	signal.Notify(sigc, syscall.SIGINT, syscall.SIGTERM)
+	<-sigc
+	fmt.Println("stopping")
+	tp.Stop()
+	wg.Wait()
 }
